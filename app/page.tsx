@@ -480,14 +480,39 @@ export default function Home() {
               The first step stays simple. After you reach out, we follow up by email with a few questions about the workflow, the current process, and the result you want.
             </p>
             {formState.message ? (
-              <p
-                className={`mt-4 text-sm ${
-                  formState.status === "error" ? "text-red-600" : "text-[var(--muted)]"
+              <div
+                className={`mt-5 rounded-xl px-5 py-4 text-sm font-medium shadow-sm transition-all duration-300 ease-in-out ${
+                  formState.status === "error"
+                    ? "bg-[rgba(185,28,28,0.1)] border border-[rgba(185,28,28,0.2)] text-[#b91c1c]"
+                    : formState.status === "success"
+                    ? "bg-[rgba(31,111,99,0.08)] border border-[rgba(31,111,99,0.15)] text-[var(--accent)]"
+                    : "bg-[rgba(82,96,109,0.08)] border border-[rgba(82,96,109,0.12)] text-[var(--muted)]"
                 }`}
                 role="status"
               >
-                {formState.message}
-              </p>
+                {formState.status === "submitting" && (
+                  <span className="inline-flex items-center gap-2">
+                    <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                    {formState.message}
+                  </span>
+                )}
+                {formState.status === "success" && (
+                  <span className="flex items-center gap-2">
+                    <svg className="h-5 w-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    {formState.message}
+                  </span>
+                )}
+                {formState.status === "error" && (
+                  <span className="flex items-center gap-2">
+                    <svg className="h-5 w-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    {formState.message}
+                  </span>
+                )}
+              </div>
             ) : null}
           </form>
         </div>
